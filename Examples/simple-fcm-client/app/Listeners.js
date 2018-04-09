@@ -23,25 +23,28 @@ export function registerKilledListener(){
   FCM.on(FCMEvent.Notification, notif => {
     AsyncStorage.setItem('lastNotification', JSON.stringify(notif));
     if(notif.opened_from_tray){
-      if(notif._actionIdentifier === 'com.myidentifi.fcm.text.reply'){
-        if(AppState.currentState !== 'background'){
-          alert('User replied '+ JSON.stringify(notif._userText));
-        } else {
-          AsyncStorage.setItem('lastMessage', JSON.stringify(notif._userText));
+      setTimeout(()=>{
+        if(notif._actionIdentifier === 'reply'){
+          if(AppState.currentState !== 'background'){
+            console.log('User replied '+ JSON.stringify(notif._userText))
+            alert('User replied '+ JSON.stringify(notif._userText));
+          } else {
+            AsyncStorage.setItem('lastMessage', JSON.stringify(notif._userText));
+          }
         }
-      }
-      if(notif._actionIdentifier === 'com.myidentifi.fcm.text.view'){
-        alert("User clicked View in App");
-      }
-      if(notif._actionIdentifier === 'com.myidentifi.fcm.text.dismiss'){
-        alert("User clicked Dismiss");
-      }
+        if(notif._actionIdentifier === 'view'){
+          alert("User clicked View in App");
+        }
+        if(notif._actionIdentifier === 'dismiss'){
+          alert("User clicked Dismiss");
+        }
+      }, 1000)
     }
   });
 }
 
 // these callback will be triggered only when app is foreground or background
-export function registerAppListener(){
+export function registerAppListener(navigation){
   FCM.on(FCMEvent.Notification, notif => {
     console.log("Notification", notif);
 
@@ -53,7 +56,14 @@ export function registerAppListener(){
     }
 
     if(notif.opened_from_tray){
-
+      if(notif.targetScreen === 'detail'){
+        setTimeout(()=>{
+          navigation.navigate('Detail')
+        }, 500)
+      }
+      setTimeout(()=>{
+        alert(`User tapped notification\n${JSON.stringify(notif)}`)
+      }, 500)
     }
 
     if(Platform.OS ==='ios'){
@@ -96,7 +106,7 @@ FCM.setNotificationCategories([
     actions: [
       {
         type: NotificationActionType.TextInput,
-        id: 'com.myidentifi.fcm.text.reply',
+        id: 'reply',
         title: 'Quick Reply',
         textInputButtonTitle: 'Send',
         textInputPlaceholder: 'Say something',
@@ -105,14 +115,14 @@ FCM.setNotificationCategories([
       },
       {
         type: NotificationActionType.Default,
-        id: 'com.myidentifi.fcm.text.view',
+        id: 'view',
         title: 'View in App',
         intentIdentifiers: [],
         options: NotificationActionOption.Foreground
       },
       {
         type: NotificationActionType.Default,
-        id: 'com.myidentifi.fcm.text.dismiss',
+        id: 'dismiss',
         title: 'Dismiss',
         intentIdentifiers: [],
         options: NotificationActionOption.Destructive

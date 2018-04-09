@@ -22,7 +22,7 @@
   "name": "react-native-fcm",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evollu/react-native-fcm.git"
+    "url": "git+https://github.com/thinkproductivity/react-native-fcm.git"
   },
-  "version": "13.3.4"
+  "version": "14.1.4"
 }
