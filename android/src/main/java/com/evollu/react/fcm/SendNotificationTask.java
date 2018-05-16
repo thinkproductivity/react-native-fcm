@@ -79,8 +79,11 @@ public class SendNotificationTask extends AsyncTask<Void, Void, Void> {
             .setVibrate(new long[]{0, DEFAULT_VIBRATION})
             .setExtras(bundle.getBundle("data"));
 
-            if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 notification.setGroup(bundle.getString("group"));
+                if (bundle.containsKey("groupSummary") && bundle.getBoolean("groupSummary")) {
+                    notification.setGroupSummary(true);
+                }
             }
             
             if (bundle.containsKey("ongoing") && bundle.getBoolean("ongoing")) {
