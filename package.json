@@ -19,7 +19,7 @@
     "cloud messaging"
   ],
   "license": "MIT",
-  "name": "react-native-fcm",
+  "name": "@opengenius/react-native-fcm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/evollu/react-native-fcm.git"
