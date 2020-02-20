@@ -2,7 +2,7 @@ require "json"
 package = JSON.parse(File.read('package.json'))
 
 Pod::Spec.new do |s|
-  s.name          = package['name']
+  s.name          = 'react-native-fcm'
   s.version       = package['version']
   s.summary       = package['description']
   s.author        = "Libin Lu"
