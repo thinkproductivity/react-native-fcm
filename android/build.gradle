@@ -8,6 +8,7 @@ def DEFAULT_FIREBASE_CORE_VERSION           = "+"
 def DEFAULT_FIREBASE_MESSAGING_VERSION      = "+"
 
 android {
+    namespace "com.evollu.react.fcm"
     compileSdkVersion project.hasProperty('compileSdkVersion') ? project.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
     buildToolsVersion project.hasProperty('buildToolsVersion') ? project.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
 
